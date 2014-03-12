@@ -1,7 +1,10 @@
 require 'sinatra'
+require './environments'
+require './actions/twitter'
 
 
 get '/' do
-  erb :"home.html"
-end
+	@counts = count_tweets
+	erb :"home.html"
 
+end

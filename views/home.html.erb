@@ -4,14 +4,58 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
-		<link rel="stylesheet" href="stylesheets/application.css" type="text/css" /> 
+		<link rel="stylesheet" href="stylesheets/application.css" type="text/css" />
 	</head>
-	<body>
-		<div class="container">
-	
-			<h1>Hi!</h1>
 
-		</div><!-- /container -->
+	<body>
+
+		<% d_3 = []%>
 		
+		<% @counts.each do |key, value| %>
+			<% d_3 << {"label" => key , "value"=> value}%>
+		<%end %> 
+
+		<% @data = [{key: "Tweets for @kissmetrics", values: d_3 }]%>
+		<h1>Tweets for @kissmetrics since March 1st</h2>
+		<div id="chart1">
+			<svg></svg>
+		</div>
+
 	</body>
+
+	<script src="javascript/d3.v3.js"></script>
+	<script src="javascript/nv.d3.js"></script>
+	<script src="javascript/tooltip.js"></script>
+	<script src="javascript/utils.js"></script>
+	<script src="javascript/axis.js"></script>
+	<script src="javascript/discreteBar.js"></script>
+	<script src="javascript/discreteBarChart.js"></script>
+	<script>
+
+
+	var some_data = <%= @data.to_json %>;
+
+
+	nv.addGraph(function() {  
+	  var chart = nv.models.discreteBarChart()
+	      .x(function(d) { return d.label })
+	      .y(function(d) { return d.value })
+	      .staggerLabels(true)
+	      .tooltips(false)
+	      .showValues(true)
+	      .transitionDuration(250)
+	      ;
+
+	  d3.select('#chart1 svg')
+	      .datum(some_data)
+	      .call(chart);
+
+	  nv.utils.windowResize(chart.update);
+
+	  return chart;
+	});
+
+
+	</script>
 </html>
+
