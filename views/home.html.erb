@@ -10,16 +10,14 @@
 	</head>
 
 	<body>
-		<div id="result">
-			<%= @name%>
 			<div id = 'qsearch' value = "#{@name}"></div>
-			<h1>Let's see how many times this user has been mentioned!</h1> 
+			<h1><%= "Let's see how many times @#{@name} has been mentioned!"%></h1> 
 			<div id="chart1">
 				<svg></svg>
 			</div>
 			<form action='/parse' method="POST" id="searchForm" >
 				<label>User</label>
-				<input ... name="name" />
+				<input ... name="name"  type = "text"/>
 				<input type="submit"></input>
 			</form>
 	</body>
@@ -35,17 +33,16 @@
 	$(function() {
 	  $("form#searchForm").submit(function(e){
 	    e.preventDefault();
-
+	     var term = $( "input[name='name']" ).val();
 	    $.ajax({
 	      type: "POST",
 	      url: "/parse",
-	      data: $('form.register').serialize(),
+	      data: { name: term},
 	      success: function(){
-	        console.log("Successfully registered")
-
+	        console.log("Successfully posted")
 	      },
 	      error: function(){
-	        console.log("Not Successful")
+	        console.log("Not Successful posting")
 
 	      }
 	    });
@@ -53,38 +50,39 @@
 	});
 	</script>
 	<script>
+	var some_data = <%= @data.to_json %>;
+	nv.addGraph(function() {  
+	  var chart = nv.models.discreteBarChart()
+	      .x(function(d) { return d.label })
+	      .y(function(d) { return d.value })
+	      .staggerLabels(true)
+	      .tooltips(false)
+	      .showValues(true)
+	      .transitionDuration(250)
+	      ;
+
+	  d3.select('#chart1 svg')
+	      .datum(some_data)
+	      .call(chart);
+
+	  nv.utils.windowResize(chart.update);
+
+	  return chart;
+	});
+
+	</script>
+	<script>
 	$(function() {
 	  $("form#searchForm").submit(function(e){
 	    e.preventDefault();
-	    var qs = <%= @name.to_json %>
-
+	    var term = $( "input[name='name']" ).val();
 	    $.ajax({
 	      type: "GET",
-	      url: "/parse",
-	      data: $('form.register').serialize(),
+	      url: "/",
+	      data: { name: term},
 	      success: function(){
-	        console.log("Successfully registered")
-	var some_data = <%= @data.to_json %>;
-
-
-		nv.addGraph(function() {  
-		  var chart = nv.models.discreteBarChart()
-		      .x(function(d) { return d.label })
-		      .y(function(d) { return d.value })
-		      .staggerLabels(true)
-		      .tooltips(false)
-		      .showValues(true)
-		      .transitionDuration(250)
-		      ;
-
-		  d3.select('#chart1 svg')
-		      .datum(some_data)
-		      .call(chart);
-
-		  nv.utils.windowResize(chart.update);
-
-		  return chart;
-		});
+	        console.log("Successfully got")
+					
 	      },
 	      error: function(){
 	        console.log("Not Successful")
