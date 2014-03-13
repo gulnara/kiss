@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" class="demo-2 no-js">
+
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
 		<link rel="stylesheet" href="stylesheets/application.css" type="text/css" />
 	</head>
 
 	<body>
-
-		<% d_3 = []%>
-		
-		<% @counts.each do |key, value| %>
-			<% d_3 << {"label" => key , "value"=> value}%>
-		<%end %> 
-
-		<% @data = [{key: "Tweets for @kissmetrics", values: d_3 }]%>
-		<h1>Tweets for @kissmetrics since March 1st</h2>
-		<div id="chart1">
-			<svg></svg>
-		</div>
-
+			<div id = 'qsearch' value = "#{@name}"></div>
+			<h1><%= "Let's see how many times @#{@name} has been mentioned!"%></h1> 
+			<div id="chart1">
+				<svg></svg>
+			</div>
+			<form action='/parse' method="POST" id="searchForm" >
+				<label>User</label>
+				<input ... name="name"  type = "text"/>
+				<input type="submit"></input>
+			</form>
 	</body>
-
+ 
 	<script src="javascript/d3.v3.js"></script>
 	<script src="javascript/nv.d3.js"></script>
 	<script src="javascript/tooltip.js"></script>
@@ -31,11 +30,27 @@
 	<script src="javascript/discreteBar.js"></script>
 	<script src="javascript/discreteBarChart.js"></script>
 	<script>
+	$(function() {
+	  $("form#searchForm").submit(function(e){
+	    e.preventDefault();
+	     var term = $( "input[name='name']" ).val();
+	    $.ajax({
+	      type: "POST",
+	      url: "/parse",
+	      data: { name: term},
+	      success: function(){
+	        console.log("Successfully posted")
+	      },
+	      error: function(){
+	        console.log("Not Successful posting")
 
-
+	      }
+	    });
+	  });
+	});
+	</script>
+	<script>
 	var some_data = <%= @data.to_json %>;
-
-
 	nv.addGraph(function() {  
 	  var chart = nv.models.discreteBarChart()
 	      .x(function(d) { return d.label })
@@ -55,7 +70,25 @@
 	  return chart;
 	});
 
-
+	</script>
+	<script>
+	$(function() {
+	  $("form#searchForm").submit(function(e){
+	    e.preventDefault();
+	    var term = $( "input[name='name']" ).val();
+	    $.ajax({
+	      type: "GET",
+	      url: "/",
+	      data: { name: term},
+	      success: function(){
+	        console.log("Successfully got")
+					
+	      },
+	      error: function(){
+	        console.log("Not Successful")
+	      }
+	    });
+	  });
+	});
 	</script>
 </html>
-
