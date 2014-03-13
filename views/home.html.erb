@@ -32,20 +32,16 @@
 	<script>
 	$(function() {
 	  $("form#searchForm").submit(function(e){
-	    e.preventDefault();
+	    
 	     var term = $( "input[name='name']" ).val();
-	    $.ajax({
-	      type: "POST",
-	      url: "/parse",
-	      data: { name: term},
-	      success: function(){
-	        console.log("Successfully posted")
-	      },
-	      error: function(){
-	        console.log("Not Successful posting")
-
-	      }
-	    });
+	     var get_url = '/?name='+ term;
+	     console.log(get_url)
+	    $.get(get_url)
+	    	.done(function(data){
+	    		console.log("Successfully posted");
+	        $('body').html(data);
+	    	});
+	    e.preventDefault();
 	  });
 	});
 	</script>
@@ -71,24 +67,5 @@
 	});
 
 	</script>
-	<script>
-	$(function() {
-	  $("form#searchForm").submit(function(e){
-	    e.preventDefault();
-	    var term = $( "input[name='name']" ).val();
-	    $.ajax({
-	      type: "GET",
-	      url: "/",
-	      data: { name: term},
-	      success: function(){
-	        console.log("Successfully got")
-					
-	      },
-	      error: function(){
-	        console.log("Not Successful")
-	      }
-	    });
-	  });
-	});
-	</script>
+	
 </html>

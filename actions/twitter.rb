@@ -13,10 +13,10 @@ module TwitterGrapher
 
 		def self.create
 			new_client = Twitter::REST::Client.new do |config|
-				config.consumer_key    = "jzWC3q7DjOhbPnXTLNfiiA"
-				config.consumer_secret = "zbkSHI2Oufq0V4B1WtQwjucXVmEAbWwjwBvSKSPIzg"
-				config.access_token        = "369737491-kh0ruoo7yWlr2VYc5u1EZRZqCJqmKi3RqbL2Zwwk"
-				config.access_token_secret = "pcpw87tSAeVu8JQpNftoLA4E3raaSIGbSUeG4EewwvKrA"
+				config.consumer_key    = "key"
+				config.consumer_secret = "key"
+				config.access_token        = "key"
+				config.access_token_secret = "key"
 			end
 			TwitterGrapher::SearchHelper.new(new_client)
 		end

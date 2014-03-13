@@ -5,10 +5,6 @@ require 'json'
  
 
 def register(params)
-	puts "here is name for post #{params[:name]}"
-end
-
-get '/' do
 	@name = params[:name]
 	puts "here is name for get #{@name}"
 	@name ||= "kissmetrics"
@@ -16,8 +12,14 @@ get '/' do
 	erb :"home.html"
 end
 
+get '/' do
+ 	register(params)
+end
+
 post '/parse' do
-	register(params)
+	content_type :json
+  register(params).to_json
+  # register(params)
 end
 
 def data(name)
