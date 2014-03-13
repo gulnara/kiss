@@ -16,7 +16,7 @@ nv.models.discreteBar = function() {
     , forceY = [0] // 0 is forced by default.. this makes sense for the majority of bar graphs... user can always do chart.forceY([]) to remove
     , color = nv.utils.defaultColor()
     , showValues = false
-    , valueFormat = d3.format(',.2f')
+    , valueFormat = d3.format(',')
     , xDomain
     , yDomain
     , xRange

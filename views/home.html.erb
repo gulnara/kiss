@@ -9,18 +9,29 @@
 
 	<body>
 
-		<% d_3 = []%>
-		
-		<% @counts.each do |key, value| %>
-			<% d_3 << {"label" => key , "value"=> value}%>
-		<%end %> 
+		<%if @name != nil%>
 
-		<% @data = [{key: "Tweets for @kissmetrics", values: d_3 }]%>
-		<h1>Tweets for @kissmetrics since March 1st</h2>
-		<div id="chart1">
-			<svg></svg>
-		</div>
+			<% d_3 = []%>
+			
+			<% @counts.each do |key, value| %>
+				<% d_3 << {"label" => key , "value"=> value}%>
+			<%end %> 
 
+			<% @data = [{key: "Tweets for @#{@name}", values: d_3 }]%>
+			<h1><%= "Tweets for @#{@name} since March 1st"%></h2>
+			<div id="chart1">
+				<svg></svg>
+			</div>
+		<% else %>	
+			<h1>Let's see how many times this user has been mentioned!</h1> 
+		<%end%>
+
+<form action='/' method="POST">
+     <label>User</label>
+          <input name="name"/>
+     <input type="submit"></input>
+
+</form>
 	</body>
 
 	<script src="javascript/d3.v3.js"></script>
