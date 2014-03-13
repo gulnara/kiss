@@ -27,7 +27,7 @@ module TwitterGrapher
 				splitting_date = tweet.created_at.to_s.split 
 				date = splitting_date[0]
 			end
-			tweets.each { |date| counts[date] += 1}
+			tweets.each { |date| counts[date] += 1 }
 			return counts
 		end
 	end
