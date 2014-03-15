@@ -1,0 +1,7 @@
+here are the tweets
+<% @tweets.each do |tweet|%>
+	<p><%="tweet for @#{ tweet.user}"%></p>
+	<p><%="by @#{ tweet.name}"%></p>
+	<p><%="#{ tweet.text}"%></p>
+	<p><%="#{ tweet.created_at}"%></p>
+<%end%>
