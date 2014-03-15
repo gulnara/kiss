@@ -37,7 +37,8 @@ module TwitterGrapher
 				tweet_data["created_at"] = t.created_at, 
 				tweet_data["name"] = t.user['screen_name']
 				tweet_data["text"] = t.text
-				tweet_data["id"] = t.id  
+				tweet_data["id"] = t.id
+				tweet_data["user"] = user  
 				tweet_data
 			end
 			return tt

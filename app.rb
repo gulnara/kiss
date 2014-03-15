@@ -10,7 +10,7 @@ require 'json'
 include Mongo
 
 configure do
-	
+
 	conn = MongoClient.new('localhost')
 	MongoMapper.connection = conn
 	MongoMapper.database = 'kiss'
@@ -48,7 +48,7 @@ def data(name)
 	counts = client.count_tweets(@name)
 	tweet_data = client.get_tweet_data(@name)
 	tweet_data.each do |t|
-		tweet = Mentions.new(:id => t["id"], :created_at => t["created_at"], :text=>t["text"], :name => t["name"])
+		tweet = Mentions.new(:id => t["id"], :created_at => t["created_at"], :text=>t["text"], :name => t["name"], :user => @name)
 		tweet.save
 		puts tweet
 	end
