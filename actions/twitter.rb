@@ -30,5 +30,17 @@ module TwitterGrapher
 			tweets.each { |date| counts[date] += 1 }
 			return counts
 		end
+
+		def get_tweet_data(user)		
+			tt = client.search("to:#{user} since:2014-03-01").map do |t| 
+				tweet_data = {}
+				tweet_data["created_at"] = t.created_at, 
+				tweet_data["name"] = t.user['screen_name']
+				tweet_data["text"] = t.text
+				tweet_data["id"] = t.id  
+				tweet_data
+			end
+			return tt
+		end
 	end
 end
