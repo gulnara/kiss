@@ -17,13 +17,21 @@ configure do
 	require './models/tweet'
 end
 
-get '/test' do
+get '/users' do
 	# tweet = Mentions.new(:created_at => Time.now, :text=>'testing', :name => 'gulnara')
 	# tweet.save
-	@tweets = Mention.all
-	erb :'tweet.html'
+	users = Mention.all
+	@users = users.map{|a| a.user}.uniq.sort
+	erb :'users.html'
 end
  
+
+get '/users=:name/tweets' do
+	@name = params[:name]
+	tweets = Mention.all
+	@tweets = tweets.select{|a| a.user==@name}
+	erb :'tweets.html'
+end
 
 def register(params)
 	@name = params[:name]

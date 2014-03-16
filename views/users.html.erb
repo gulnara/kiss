@@ -1,0 +1,5 @@
+here are the users
+<% @users.each do |user|%>
+	<p><%="@#{ user}"%></p>
+	<a href="/users=<%=user%>/tweets">See Tweets</a>
+<%end%>
