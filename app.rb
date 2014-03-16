@@ -21,7 +21,7 @@ get '/users' do
 	erb :'users.html'
 end
  
-get '/users=:name/tweets' do
+get '/users=:name' do
 	@name = params[:name]
 	tweets = Mention.all
 	@tweets = tweets.select{|a| a.user==@name}
