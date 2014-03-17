@@ -1,0 +1,10 @@
+<h3><%="tweets for @#{@name}"%></h3>
+<% @sorted_tweets.each do |tweet|%>
+<div class="list-group">
+  <a href="#" class="list-group-item ">
+    <h4 class="list-group-item-heading"><%="by @#{ tweet.name}"%></h4>
+    <p class="list-group-item-text"><%="'#{ tweet.text}'"%></p>
+    <p class="list-group-item-text"><%="#{ tweet.created_at}"%></p>
+  </a>
+</div>
+<%end%>

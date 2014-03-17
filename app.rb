@@ -18,22 +18,22 @@ end
 get '/users' do
 	users = Mention.all
 	@users = users.map{|a| a.user}.uniq.sort
-	erb :'users.html'
+	erb :'users'
 end
  
 get '/users=:name' do
 	@name = params[:name]
 	tweets = Mention.all
-	@tweets = tweets.select{|a| a.user==@name}
-	erb :'tweets.html'
+	unsorted_tweets = tweets.select{|a| a.user==@name}
+	@sorted_tweets = unsorted_tweets.sort_by{|a| a['created_at']}.reverse!
+	erb :'tweets'
 end
 
 def register(params)
 	@name = params[:name]
-	puts "here is name for get #{@name}"
 	@name ||= "kissmetrics"
  	@data = data(@name)
-	erb :"home.html"
+	erb :"home"
 end
 
 get '/' do
@@ -46,7 +46,6 @@ post '/parse' do
 end
 
 def data(name)
-	puts "name of who we are searching for #{name}"
 	client = TwitterGrapher::SearchHelper.create
 	counts = client.count_tweets(@name)
 	tweet_data = client.get_tweet_data(@name)
