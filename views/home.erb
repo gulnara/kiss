@@ -1,0 +1,58 @@
+<div id = 'qsearch' value = "#{@name}"></div>
+<h1><%= "Let's see how many times @#{@name} has been mentioned!"%></h1> 
+<div id="chart1">
+	<svg></svg>
+</div>
+<form action='/parse' method="POST" id="searchForm" >
+	<label>@</label>
+	<input ... name="name"  type = "text"/>
+	<button type="submit" class="btn btn-success">Submit</button>
+</form>
+<a href= "/users" class="btn btn-info">See all tweets per user here!</a>
+<script src="javascript/d3.v3.js"></script>
+<script src="javascript/nv.d3.js"></script>
+<script src="javascript/tooltip.js"></script>
+<script src="javascript/utils.js"></script>
+<script src="javascript/axis.js"></script>
+<script src="javascript/discreteBar.js"></script>
+<script src="javascript/discreteBarChart.js"></script>
+<script>
+$(function() {
+  $("form#searchForm").submit(function(e){
+    
+     var term = $( "input[name='name']" ).val();
+     var get_url = '/?name='+ term;
+     console.log(get_url)
+    $.ajax(get_url,{
+			success: function(response){
+				$('body').html(response);
+			},
+			erro: function(request, erroType, errorMessage){
+				alert('Error: '+ erroType + ' with message: '+ errorMessage);
+			}
+		});
+    e.preventDefault();
+  });
+});
+</script>
+<script>
+var some_data = <%= @data.to_json %>;
+nv.addGraph(function() {  
+  var chart = nv.models.discreteBarChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .staggerLabels(true)
+      .tooltips(false)
+      .showValues(true)
+      .transitionDuration(250)
+      ;
+
+  d3.select('#chart1 svg')
+      .datum(some_data)
+      .call(chart);
+
+  nv.utils.windowResize(chart.update);
+
+  return chart;
+});
+</script>

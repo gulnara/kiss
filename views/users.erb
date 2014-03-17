@@ -1,0 +1,36 @@
+<h1>Here are the users that have been called via Twitter API</h1>
+<ul class="pager">
+	<li><a href= "/">Back</a></li>
+</ul>	
+<div class="row">
+  <div class="col-sm-3 blog-main">
+		<% @users.each do |user|%>
+		<li class='tweets' id = "<%= user %>">
+			<h3><%="@#{ user}"%></h3>
+			<button type="button" class="btn btn-info" id ="show">Show/Hide Tweets</button>
+		<%end%>
+		</li>
+	</div>
+	<div class="col-sm-8  ">
+			<div class='tweet'>
+			</div>
+	</div>
+</div>
+
+<script>
+jQuery(document).ready(function() {
+$('.tweets').on('click',"#show" , function(){
+	var term = $(this).parents('li').attr('id');
+	console.log(term);
+	 var get_url = '/users='+ term;
+	$.ajax(get_url,{
+		success: function(response){
+			$('.tweet').html(response).toggle();
+		},
+		erro: function(request, erroType, errorMessage){
+			alert('Error: '+ erroType + ' with message: '+ errorMessage);
+		}
+	});
+	});
+});
+</script>
