@@ -15,8 +15,6 @@ include Mongo
 # 	require './models/tweet'
 # end
 
-
- 
 mongo_url = ENV['MONGOHQ_URL'] || 'mongodb://localhost/dbname'
  
 MongoMapper.connection = Mongo::Connection.from_uri mongo_url

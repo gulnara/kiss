@@ -28,3 +28,11 @@ svg {
 li{
 	list-style-type: none;
 }
+
+.col-sm-8{
+	background-color: #ECF0F1;
+}
+
+.btn-info {
+	margin-top: 10px;
+}
