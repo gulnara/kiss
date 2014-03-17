@@ -10,7 +10,7 @@
   <input name="name" type='radio' id ='tweets' value = "tweets">Tweets</input>
   <!-- <button type="submit" class="btn btn-success">Submit</button> -->
 </form>
-<a href= "/users" class="btn btn-info">See all tweets per user here!</a>
+<a href= "/users" class="btn btn-info">See all mentions here!</a>
 <script src="javascript/d3.v3.js"></script>
 <script src="javascript/nv.d3.js"></script>
 <script src="javascript/tooltip.js"></script>
@@ -23,10 +23,8 @@ jQuery(document).ready(function() {
   $("#searchForm").on('click', '#mentions', function(e){
     var term = $( "input[name='name']" ).val();
     var get_url = '/?name='+ term;
-    console.log(get_url)
     $.ajax(get_url,{
       success: function(response){
-        console.log('hmm')
       $('body').html(response);
       },
       erro: function(request, erroType, errorMessage){
@@ -57,7 +55,7 @@ jQuery(document).ready(function() {
 });
 </script>
 <script>
-var some_data = <%= @data.to_json %>;
+var some_data = <%= @data2.to_json %>;
 nv.addGraph(function() {  
   var chart = nv.models.discreteBarChart()
       .x(function(d) { return d.label })
@@ -77,3 +75,4 @@ nv.addGraph(function() {
   return chart;
 });
 </script>
+

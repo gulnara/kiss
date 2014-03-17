@@ -36,12 +36,20 @@ get '/users=:name' do
 	erb :'tweets'
 end
 
+get '/tweets=:name' do
+	@name = params[:name]
+ 	@data2 = tweets(@name)
+	erb :"test"
+end
+
+
 def register(params)
 	@name = params[:name]
 	@name ||= "kissmetrics"
  	@data = data(@name)
 	erb :"home"
 end
+
 
 get '/' do
  	register(params)
@@ -63,4 +71,14 @@ def data(name)
   d_3 = []
   counts.each { |key, value| d_3 << { "label" => key , "value"=> value } }
   @data = [{key: "Tweets for @#{name}", values: d_3}]
+end
+
+
+def tweets(name)
+	client = TwitterGrapher::SearchHelper.create
+	counts2 = client.get_tweets(@name)
+	#this is for d3js data
+  dv2_3 = []
+  counts2.each { |key, value| dv2_3 << { "label" => key , "value"=> value } }
+  data = [{key: "Tweets for @#{name}", values: dv2_3}]
 end
