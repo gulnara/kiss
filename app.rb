@@ -45,7 +45,7 @@ end
 
 def register(params)
 	@name = params[:name]
-	@name ||= "kissmetrics"
+	@name ||= "gulnara"
  	@data = data(@name)
 	erb :"home"
 end
